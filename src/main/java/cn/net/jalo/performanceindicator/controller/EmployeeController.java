@@ -15,45 +15,46 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.pagehelper.Page;
 
-import cn.net.jalo.performanceindicator.entity.Integral;
+import cn.net.jalo.performanceindicator.entity.Employee;
 import cn.net.jalo.performanceindicator.result.Result;
-import cn.net.jalo.performanceindicator.service.IntegralService;
+import cn.net.jalo.performanceindicator.service.EmployeeService;
 
 @RestController
-@RequestMapping("/integral")
-public class IntegralController {
+@RequestMapping("/employee")
+public class EmployeeController {
 
 	@Autowired
-	private IntegralService integralService;
+	private EmployeeService employeeService;
 	
 	@DeleteMapping("/{id}")
 	public Result<Integer> delete(@PathVariable Long id, HttpServletRequest request, HttpServletResponse response) {
 		try {
-			return new Result<Integer>(integralService.delete(id), "删除成功", true);
+			return new Result<Integer>(employeeService.delete(id), "删除成功", true);
 		} catch (Exception e) {
 			return new Result<Integer>(0, "删除失败", false);
 		}
 	}
 	
 	@PutMapping
-	public Result<Integer> save(@RequestBody Integral integral, HttpServletRequest request, HttpServletResponse response) {
+	public Result<Integer> save(@RequestBody Employee employee, HttpServletRequest request, HttpServletResponse response) {
 		try {
-			return new Result<Integer>(integralService.save(integral), "保存成功", true);
+			return new Result<Integer>(employeeService.save(employee), "保存成功", true);
 		} catch (Exception e) {
 			return new Result<Integer>(0, "保存失败", false);
 		}
 	}
 	
 	@GetMapping
-	public Result<Page<Integral>> select(@RequestParam(required = false) String label, @RequestParam(required = false) Integer value, 
+	public Result<Page<Employee>> select(@RequestParam(required = false) String name, @RequestParam(required = false) String phone, 
+			@RequestParam(required = false) String email, @RequestParam(required = false)  String address,
 			@RequestParam(required = false, defaultValue = "1") Integer pageNum, @RequestParam(required = false, defaultValue = "100") Integer pageSize, 
 			@RequestParam(required = false) String orderBy, HttpServletRequest request, HttpServletResponse response) {
-		Page<Integral> integrals = integralService.select(label, value, pageNum, pageSize, orderBy);
-		return new Result<>(integrals, integrals.getPageNum(), integrals.getPageSize(), integrals.getTotal(), integrals.getPages());
+		Page<Employee> employees = employeeService.select(name, phone, email, address, pageNum, pageSize, orderBy);
+		return new Result<>(employees, employees.getPageNum(), employees.getPageSize(), employees.getTotal(), employees.getPages());
 	}
 	
 	@GetMapping("/{id}")
-	public Result<Integral> selectById(@PathVariable Long id, HttpServletRequest request, HttpServletResponse response) {
-		return new Result<>(integralService.selectById(id));
+	public Result<Employee> selectById(@PathVariable Long id, HttpServletRequest request, HttpServletResponse response) {
+		return new Result<>(employeeService.selectById(id));
 	}
 }

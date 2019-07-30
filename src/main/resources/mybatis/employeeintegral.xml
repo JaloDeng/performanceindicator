@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="cn.net.jalo.performanceindicator.mapper.EmployeeIntegralMapper" >
+
+	<resultMap id="BaseResultMap" type="cn.net.jalo.performanceindicator.entity.EmployeeIntegral" >
+		<result column="id" property="id"/>
+		<result column="employeeId" property="employeeId"/>
+		<result column="integralId" property="integralId"/>
+		<result column="integralTime" property="integralTime"/>
+		<result column="integralValue" property="integralValue"/>
+		<result column="remark" property="remark"/>
+		<result column="createUser" property="createUser"/>
+		<result column="createTime" property="createTime"/>
+		<result column="updateUser" property="updateUser"/>
+		<result column="updateTime" property="updateTime"/>
+	</resultMap>
+	
+	<sql id="Base_Column" >
+		id, employeeId, integralId, integralTime, integralValue, remark, createUser, createTime, updateUser, updateTime
+	</sql>
+	
+	<sql id="Where_Clause">
+		<where>
+		<if test="employeeId != null and employeeId != ''">
+			AND employeeId = #{employeeId}
+		</if>
+		<if test="integralStartTime != null and integralStartTime != '' and integralEndTime != null and integralEndTime != ''">
+			AND integralTime between #{appStartTime} AND #{integralEndTime}
+		</if>
+		<if test="name != null and name != ''">
+			AND name LIKE CONCAT('%', '#{name}', '%')
+		</if>
+		<if test="phone != null and phone != ''">
+			AND phone LIKE CONCAT('%', '#{phone}', '%')
+		</if>
+		<if test="email != null and email != ''">
+			AND email LIKE CONCAT('%', '#{email}', '%')
+		</if>
+		</where>
+	</sql>
+	
+	<insert id="insert" parameterType="cn.net.jalo.performanceindicator.entity.EmployeeIntegral">
+		INSERT INTO t_employee_integral(employeeId, integralId, integralTime, integralValue, remark, createUser, updateUser)
+		values(#{employeeId}, #{integralId}, #{integralTime}, #{integralValue}, #{remark}, #{createUser}, #{updateUser})
+	</insert>
+	
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM t_employee_integral WHERE id = #{id}
+	</delete>
+	
+	<select id="select" resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column"/> FROM t_employee_integral <include refid="Where_Clause"/>
+	</select>
+	
+	<select id="selectById" resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column"/> FROM t_employee_integral WHERE id = #{id}
+	</select>
+	
+	<update id="update" parameterType="cn.net.jalo.performanceindicator.entity.EmployeeIntegral">
+		update t_employee_integral
+		<set>
+		<if test="employeeId != null and employeeId != ''">
+			employeeId = #{employeeId},
+		</if>
+		<if test="integralId != null">
+			integralId = #{integralId},
+		</if>
+		<if test="integralTime != null">
+			integralTime = #{integralTime},
+		</if>
+		<if test="integralValue != null">
+			integralValue = #{integralValue},
+		</if>
+		<if test="remark != null">
+			remark = #{remark},
+		</if>
+		<if test="updateUser != null">
+			updateUser = #{updateUser},
+		</if>
+		<if test="updateTime != null">
+			updateTime = #{updateTime},
+		</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+</mapper>

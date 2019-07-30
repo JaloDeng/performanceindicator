@@ -10,7 +10,6 @@ import com.github.pagehelper.Page;
 
 import cn.net.jalo.performanceindicator.entity.Integral;
 import cn.net.jalo.performanceindicator.mapper.IntegralMapper;
-import cn.net.jalo.performanceindicator.result.Result;
 
 @Service
 @Transactional
@@ -33,12 +32,11 @@ public class IntegralService {
 		}
 	}
 	
-	public Result<Page<Integral>> select(String label, Integer value, Integer pageNum, Integer pageSize, String orderBy) {
-		Page<Integral> integrals = integralMapper.select(label, value, pageNum, pageSize, orderBy);
-		return new Result<>(integrals, integrals.getPageNum(), integrals.getPageSize(), integrals.getTotal(), integrals.getPages());
+	public Page<Integral> select(String label, Integer value, Integer pageNum, Integer pageSize, String orderBy) {
+		return integralMapper.select(label, value, pageNum, pageSize, orderBy);
 	}
 	
-	public Result<Integral> selectById(Serializable id) {
-		return new Result<>(integralMapper.selectById(id));
+	public Integral selectById(Serializable id) {
+		return integralMapper.selectById(id);
 	}
 }
