@@ -16,6 +16,22 @@
 		<result column="updateTime" property="updateTime"/>
 	</resultMap>
 	
+	<resultMap id="ModelResultMap" type="cn.net.jalo.performanceindicator.model.EmployeeIntegralModel" >
+		<result column="id" property="id"/>
+		<result column="employeeId" property="employeeId"/>
+		<result column="name" property="name"/>
+		<result column="phone" property="phone"/>
+		<result column="email" property="email"/>
+		<result column="integralId" property="integralId"/>
+		<result column="integralTime" property="integralTime"/>
+		<result column="integralValue" property="integralValue"/>
+		<result column="remark" property="remark"/>
+		<result column="createUser" property="createUser"/>
+		<result column="createTime" property="createTime"/>
+		<result column="updateUser" property="updateUser"/>
+		<result column="updateTime" property="updateTime"/>
+	</resultMap>
+	
 	<sql id="Base_Column" >
 		id, employeeId, integralId, integralTime, integralValue, remark, createUser, createTime, updateUser, updateTime
 	</sql>
@@ -26,7 +42,7 @@
 			AND employeeId = #{employeeId}
 		</if>
 		<if test="integralStartTime != null and integralStartTime != '' and integralEndTime != null and integralEndTime != ''">
-			AND integralTime between #{appStartTime} AND #{integralEndTime}
+			AND integralTime BETWEEN #{appStartTime} AND #{integralEndTime}
 		</if>
 		<if test="name != null and name != ''">
 			AND name LIKE CONCAT('%', '#{name}', '%')
@@ -36,6 +52,9 @@
 		</if>
 		<if test="email != null and email != ''">
 			AND email LIKE CONCAT('%', '#{email}', '%')
+		</if>
+		<if test="label != null and label != ''">
+			AND label LIKE CONCAT('%', '#{label}', '%')
 		</if>
 		</where>
 	</sql>
@@ -49,12 +68,38 @@
 		DELETE FROM t_employee_integral WHERE id = #{id}
 	</delete>
 	
-	<select id="select" resultMap="BaseResultMap">
-		SELECT <include refid="Base_Column"/> FROM t_employee_integral <include refid="Where_Clause"/>
+	<select id="select" resultMap="ModelResultMap">
+		SELECT 		
+			  ei.id
+			, ei.integralTime
+			, ei.integralValue
+			, ei.remark
+			, e.name
+			, i.label
+		FROM t_employee_integral ei
+		INNER JOIN t_employee e ON e.id = ei.employeeId
+		INNER JOIN t_integral i ON i.id = ei.integralId
+		<include refid="Where_Clause"/>
 	</select>
 	
-	<select id="selectById" resultMap="BaseResultMap">
-		SELECT <include refid="Base_Column"/> FROM t_employee_integral WHERE id = #{id}
+	<select id="selectById" resultMap="ModelResultMap">
+		SELECT 
+			  ei.id
+			, ei.employeeId
+			, ei.integralId
+			, ei.integralTime
+			, ei.integralValue
+			, ei.remark
+			, ei.createUser
+			, ei.createTime
+			, ei.updateUser
+			, ei.updateTime
+			, e.name
+			, i.label
+		FROM t_employee_integral ei
+		INNER JOIN t_employee e ON e.id = ei.employeeId
+		INNER JOIN t_integral i ON i.id = ei.integralId
+		WHERE ei.id = #{id}
 	</select>
 	
 	<update id="update" parameterType="cn.net.jalo.performanceindicator.entity.EmployeeIntegral">
