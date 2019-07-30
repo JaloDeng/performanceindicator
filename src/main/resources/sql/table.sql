@@ -1,7 +1,7 @@
 /*
 MySQL Backup
 Database: performance_indicator
-Backup Time: 2019-07-29 22:10:39
+Backup Time: 2019-07-30 12:25:12
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -26,8 +26,12 @@ CREATE TABLE `t_employee_integral` (
   `employeeId` int(11) DEFAULT NULL COMMENT '员工ID，t_employee.id',
   `integralId` int(11) DEFAULT NULL COMMENT '积分ID，t_integral.id',
   `integralTime` datetime DEFAULT NULL COMMENT '获得积分的时间',
-  `value` int(11) DEFAULT NULL COMMENT '积分值，冗余，以防积分表变化',
+  `integralValue` int(11) DEFAULT NULL COMMENT '积分值，冗余，以防积分表变化',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
+  `createUser` varchar(100) DEFAULT NULL COMMENT '创建用户',
+  `createTime` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updateUser` varchar(100) DEFAULT NULL COMMENT '更新用户',
+  `updateTime` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   KEY `index_t_employee_integral_employeeId` (`employeeId`) USING BTREE,
   KEY `index_t_employee_integral_integralId` (`integralId`) USING BTREE,
@@ -44,7 +48,7 @@ CREATE TABLE `t_integral` (
   `updateTime` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_t_integral_label` (`label`) USING BTREE COMMENT '唯一索引，积分标签索引'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='积分表';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COMMENT='积分表';
 BEGIN;
 LOCK TABLES `performance_indicator`.`t_employee` WRITE;
 DELETE FROM `performance_indicator`.`t_employee`;
@@ -58,5 +62,6 @@ COMMIT;
 BEGIN;
 LOCK TABLES `performance_indicator`.`t_integral` WRITE;
 DELETE FROM `performance_indicator`.`t_integral`;
+INSERT INTO `performance_indicator`.`t_integral` (`id`,`label`,`value`,`remark`,`createUser`,`createTime`,`updateUser`,`updateTime`) VALUES (1, '开户', 4, NULL, 'SYSTEM', '2019-07-30 12:23:38', 'SYSTEM', '2019-07-30 12:24:51'),(2, '发起方', 3, NULL, 'SYSTEM', '2019-07-30 12:23:50', 'SYSTEM', '2019-07-30 12:24:51'),(3, '活动前', 2, NULL, 'SYSTEM', '2019-07-30 12:23:59', 'SYSTEM', '2019-07-30 12:24:52'),(4, '活动中', 1, NULL, 'SYSTEM', '2019-07-30 12:24:07', 'SYSTEM', '2019-07-30 12:24:52'),(5, '活动总结', 1, NULL, 'SYSTEM', '2019-07-30 12:24:19', 'SYSTEM', '2019-07-30 12:24:53'),(6, '活动后跟踪', 1, NULL, 'SYSTEM', '2019-07-30 12:24:30', 'SYSTEM', '2019-07-30 12:24:53'),(7, '讲师', 3, NULL, 'SYSTEM', '2019-07-30 12:24:42', 'SYSTEM', '2019-07-30 12:24:54');
 UNLOCK TABLES;
 COMMIT;
