@@ -68,12 +68,16 @@
 		DELETE FROM t_employee_integral WHERE id = #{id}
 	</delete>
 	
-	<select id="select" resultMap="ModelResultMap">
+	<select id="selectModel" resultMap="ModelResultMap">
 		SELECT 		
 			  ei.id
 			, ei.integralTime
 			, ei.integralValue
 			, ei.remark
+			, ei.createUser
+			, ei.createTime
+			, ei.updateUser
+			, ei.updateTime
 			, e.name
 			, i.label
 		FROM t_employee_integral ei
@@ -82,7 +86,7 @@
 		<include refid="Where_Clause"/>
 	</select>
 	
-	<select id="selectById" resultMap="ModelResultMap">
+	<select id="selectModelById" resultMap="ModelResultMap">
 		SELECT 
 			  ei.id
 			, ei.employeeId

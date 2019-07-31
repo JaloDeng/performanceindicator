@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.github.pagehelper.Page;
 
 import cn.net.jalo.performanceindicator.entity.EmployeeIntegral;
+import cn.net.jalo.performanceindicator.model.EmployeeIntegralModel;
 import cn.net.jalo.performanceindicator.result.Result;
 import cn.net.jalo.performanceindicator.service.EmployeeIntegralService;
 
@@ -45,20 +46,24 @@ public class EmployeeIntegralController {
 	}
 	
 	@GetMapping
-	public Result<Page<EmployeeIntegral>> select(@RequestParam(required = false) Integer employeeId, 
-			@RequestParam(required = false) String integralStartTime, @RequestParam(required = false) String integralEndTime,
-			@RequestParam(required = false) String name, @RequestParam(required = false) String phone, 
-			@RequestParam(required = false) String email, @RequestParam(required = false)  String label,
-			@RequestParam(required = false, defaultValue = "1") Integer pageNum, @RequestParam(required = false, defaultValue = "100") Integer pageSize, 
+	public Result<Page<EmployeeIntegralModel>> selectModel(@RequestParam(required = false) Integer employeeId,
+			@RequestParam(required = false) String integralStartTime,
+			@RequestParam(required = false) String integralEndTime, 
+			@RequestParam(required = false) String name,
+			@RequestParam(required = false) String phone, 
+			@RequestParam(required = false) String email,
+			@RequestParam(required = false) String label,
+			@RequestParam(required = false, defaultValue = "1") Integer pageNum,
+			@RequestParam(required = false, defaultValue = "100") Integer pageSize,
 			@RequestParam(required = false) String orderBy, HttpServletRequest request, HttpServletResponse response) {
-		Page<EmployeeIntegral> employeeIntegrals = employeeIntegralService.select(employeeId, integralStartTime, integralEndTime, 
-				name, phone, email, label, pageNum, pageSize, orderBy);
-		return new Result<>(employeeIntegrals, employeeIntegrals.getPageNum(), employeeIntegrals.getPageSize(), 
+		Page<EmployeeIntegralModel> employeeIntegrals = employeeIntegralService.selectModel(employeeId, integralStartTime,
+				integralEndTime, name, phone, email, label, pageNum, pageSize, orderBy);
+		return new Result<>(employeeIntegrals, employeeIntegrals.getPageNum(), employeeIntegrals.getPageSize(),
 				employeeIntegrals.getTotal(), employeeIntegrals.getPages());
 	}
 	
 	@GetMapping("/{id}")
-	public Result<EmployeeIntegral> selectById(@PathVariable Long id, HttpServletRequest request, HttpServletResponse response) {
-		return new Result<>(employeeIntegralService.selectById(id));
+	public Result<EmployeeIntegralModel> selectModelById(@PathVariable Long id, HttpServletRequest request, HttpServletResponse response) {
+		return new Result<>(employeeIntegralService.selectModelById(id));
 	}
 }
