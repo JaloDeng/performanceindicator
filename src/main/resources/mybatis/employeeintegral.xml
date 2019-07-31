@@ -44,6 +44,9 @@
 		<if test="integralStartTime != null and integralStartTime != '' and integralEndTime != null and integralEndTime != ''">
 			AND integralTime BETWEEN #{appStartTime} AND #{integralEndTime}
 		</if>
+		<if test="status != null and status != ''">
+			AND status LIKE CONCAT('%', '#{status}', '%')
+		</if>
 		<if test="name != null and name != ''">
 			AND name LIKE CONCAT('%', '#{name}', '%')
 		</if>

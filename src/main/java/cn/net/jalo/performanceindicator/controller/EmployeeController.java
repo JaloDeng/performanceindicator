@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.github.pagehelper.Page;
 
 import cn.net.jalo.performanceindicator.entity.Employee;
+import cn.net.jalo.performanceindicator.enums.ActiveStatus;
 import cn.net.jalo.performanceindicator.result.Result;
 import cn.net.jalo.performanceindicator.service.EmployeeService;
 
@@ -45,12 +46,19 @@ public class EmployeeController {
 	}
 	
 	@GetMapping
-	public Result<Page<Employee>> select(@RequestParam(required = false) String name, @RequestParam(required = false) String phone, 
-			@RequestParam(required = false) String email, @RequestParam(required = false)  String address,
-			@RequestParam(required = false, defaultValue = "1") Integer pageNum, @RequestParam(required = false, defaultValue = "100") Integer pageSize, 
-			@RequestParam(required = false) String orderBy, HttpServletRequest request, HttpServletResponse response) {
-		Page<Employee> employees = employeeService.select(name, phone, email, address, pageNum, pageSize, orderBy);
-		return new Result<>(employees, employees.getPageNum(), employees.getPageSize(), employees.getTotal(), employees.getPages());
+	public Result<Page<Employee>> select(@RequestParam(required = false) ActiveStatus status,
+			@RequestParam(required = false) String name, 
+			@RequestParam(required = false) String phone,
+			@RequestParam(required = false) String email, 
+			@RequestParam(required = false) String address,
+			@RequestParam(required = false, defaultValue = "1") Integer pageNum,
+			@RequestParam(required = false, defaultValue = "100") Integer pageSize,
+			@RequestParam(required = false) String orderBy, 
+			HttpServletRequest request, HttpServletResponse response) {
+		Page<Employee> employees = employeeService.select(status, name, phone, email, address, pageNum, pageSize,
+				orderBy);
+		return new Result<>(employees, employees.getPageNum(), employees.getPageSize(), employees.getTotal(),
+				employees.getPages());
 	}
 	
 	@GetMapping("/{id}")

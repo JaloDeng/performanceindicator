@@ -10,10 +10,12 @@ DROP TABLE IF EXISTS `performance_indicator`.`t_employee_integral`;
 DROP TABLE IF EXISTS `performance_indicator`.`t_integral`;
 CREATE TABLE `t_employee` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `status` enum('enabled','disabled') NOT NULL DEFAULT 'enabled' COMMENT '启用状态，enabled：启用，disabled：禁用',
   `name` varchar(100) DEFAULT NULL COMMENT '姓名',
   `phone` varchar(50) DEFAULT NULL COMMENT '手机号码',
   `email` varchar(100) DEFAULT NULL COMMENT '电子邮箱',
   `address` varchar(200) DEFAULT NULL COMMENT '联系地址',
+  `initialIntegralValue` int(11) NOT NULL DEFAULT '0' COMMENT '初始积分值',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
   `createUser` varchar(100) DEFAULT NULL COMMENT '创建用户',
   `createTime` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',

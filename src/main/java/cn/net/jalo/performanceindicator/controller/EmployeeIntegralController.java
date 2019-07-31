@@ -55,7 +55,8 @@ public class EmployeeIntegralController {
 			@RequestParam(required = false) String label,
 			@RequestParam(required = false, defaultValue = "1") Integer pageNum,
 			@RequestParam(required = false, defaultValue = "100") Integer pageSize,
-			@RequestParam(required = false) String orderBy, HttpServletRequest request, HttpServletResponse response) {
+			@RequestParam(required = false) String orderBy, 
+			HttpServletRequest request, HttpServletResponse response) {
 		Page<EmployeeIntegralModel> employeeIntegrals = employeeIntegralService.selectModel(employeeId, integralStartTime,
 				integralEndTime, name, phone, email, label, pageNum, pageSize, orderBy);
 		return new Result<>(employeeIntegrals, employeeIntegrals.getPageNum(), employeeIntegrals.getPageSize(),

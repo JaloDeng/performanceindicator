@@ -5,10 +5,12 @@
 
 	<resultMap id="BaseResultMap" type="cn.net.jalo.performanceindicator.entity.Employee" >
 		<result column="id" property="id"/>
+		<result column="status" property="status"/>
 		<result column="name" property="name"/>
 		<result column="phone" property="phone"/>
 		<result column="email" property="email"/>
 		<result column="address" property="address"/>
+		<result column="initialIntegralValue" property="initialIntegralValue"/>
 		<result column="remark" property="remark"/>
 		<result column="createUser" property="createUser"/>
 		<result column="createTime" property="createTime"/>
@@ -17,11 +19,14 @@
 	</resultMap>
 	
 	<sql id="Base_Column" >
-		id, name, phone, email, address, remark, createUser, createTime, updateUser, updateTime
+		id, status, name, phone, email, address, remark, initialIntegralValue, createUser, createTime, updateUser, updateTime
 	</sql>
 	
 	<sql id="Where_Clause">
 		<where>
+		<if test="status != null">
+			AND status = #{status}
+		</if>
 		<if test="name != null and name != ''">
 			AND name LIKE CONCAT('%', '#{name}', '%')
 		</if>
@@ -38,8 +43,8 @@
 	</sql>
 	
 	<insert id="insert" parameterType="cn.net.jalo.performanceindicator.entity.Employee">
-		INSERT INTO t_employee(name, phone, email, address, remark, createUser, updateUser)
-		values(#{name}, #{phone}, #{email}, #{address}, #{remark}, #{createUser}, #{updateUser})
+		INSERT INTO t_employee(status, name, phone, email, address, remark, createUser, updateUser)
+		values(#{status}, #{name}, #{phone}, #{email}, #{address}, #{remark}, #{createUser}, #{updateUser})
 	</insert>
 	
 	<delete id="delete" parameterType="java.lang.Long">
@@ -57,6 +62,9 @@
 	<update id="update" parameterType="cn.net.jalo.performanceindicator.entity.Employee">
 		update t_employee
 		<set>
+		<if test="status != null and status != ''">
+			status = #{status},
+		</if>
 		<if test="name != null and name != ''">
 			name = #{name},
 		</if>
