@@ -21,7 +21,7 @@
 	<sql id="Where_Clause">
 		<where>
 		<if test="label != null and label != ''">
-			AND label LIKE CONCAT('%', '#{label}', '%')
+			AND label LIKE '%${label}%'
 		</if>
 		<if test="value != null">
 			AND value = #{value}
