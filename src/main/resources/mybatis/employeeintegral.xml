@@ -51,7 +51,7 @@
 			</foreach>
 		</if>
 		<if test="integralStartTime != null and integralStartTime != '' and integralEndTime != null and integralEndTime != ''">
-			AND integralTime BETWEEN '#{integralStartTime}' AND '#{integralEndTime}'
+			AND integralTime BETWEEN #{integralStartTime} AND #{integralEndTime}
 		</if>
 		</where>
 	</sql>
@@ -68,6 +68,8 @@
 	<select id="selectModel" resultMap="ModelResultMap">
 		SELECT 		
 			  ei.id
+			, ei.employeeId
+			, ei.integralId
 			, ei.integralTime
 			, ei.integralValue
 			, ei.remark
