@@ -38,26 +38,20 @@
 	
 	<sql id="Where_Clause">
 		<where>
-		<if test="employeeId != null and employeeId != ''">
-			AND employeeId = #{employeeId}
+		<if test="employeeIds != null">
+			AND employeeId IN
+			<foreach collection="employeeIds" open="(" close=")" separator="," item="employeeId">
+				#{employeeId}
+			</foreach>
+		</if>
+		<if test="integralIds != null">
+			AND integralId IN
+			<foreach collection="integralIds" open="(" close=")" separator="," item="integralId">
+				#{integralId}
+			</foreach>
 		</if>
 		<if test="integralStartTime != null and integralStartTime != '' and integralEndTime != null and integralEndTime != ''">
-			AND integralTime BETWEEN #{appStartTime} AND #{integralEndTime}
-		</if>
-		<if test="status != null and status != ''">
-			AND status LIKE CONCAT('%', '#{status}', '%')
-		</if>
-		<if test="name != null and name != ''">
-			AND name LIKE CONCAT('%', '#{name}', '%')
-		</if>
-		<if test="phone != null and phone != ''">
-			AND phone LIKE CONCAT('%', '#{phone}', '%')
-		</if>
-		<if test="email != null and email != ''">
-			AND email LIKE CONCAT('%', '#{email}', '%')
-		</if>
-		<if test="label != null and label != ''">
-			AND label LIKE CONCAT('%', '#{label}', '%')
+			AND integralTime BETWEEN '#{integralStartTime}' AND '#{integralEndTime}'
 		</if>
 		</where>
 	</sql>
@@ -112,7 +106,7 @@
 	<update id="update" parameterType="cn.net.jalo.performanceindicator.entity.EmployeeIntegral">
 		update t_employee_integral
 		<set>
-		<if test="employeeId != null and employeeId != ''">
+		<if test="employeeId != null">
 			employeeId = #{employeeId},
 		</if>
 		<if test="integralId != null">

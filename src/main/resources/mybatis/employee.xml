@@ -28,23 +28,23 @@
 			AND status = #{status}
 		</if>
 		<if test="name != null and name != ''">
-			AND name LIKE CONCAT('%', '#{name}', '%')
+			AND name LIKE '%${name}%'
 		</if>
 		<if test="phone != null and phone != ''">
-			AND phone LIKE CONCAT('%', '#{phone}', '%')
+			AND phone LIKE '%${phone}%'
 		</if>
 		<if test="email != null and email != ''">
-			AND email LIKE CONCAT('%', '#{email}', '%')
+			AND email LIKE '%${email}%'
 		</if>
 		<if test="address != null and address != ''">
-			AND address LIKE CONCAT('%', '#{address}', '%')
+			AND address LIKE '%${address}%'
 		</if>
 		</where>
 	</sql>
 	
 	<insert id="insert" parameterType="cn.net.jalo.performanceindicator.entity.Employee">
-		INSERT INTO t_employee(status, name, phone, email, address, remark, createUser, updateUser)
-		values(#{status}, #{name}, #{phone}, #{email}, #{address}, #{remark}, #{createUser}, #{updateUser})
+		INSERT INTO t_employee(status, name, phone, email, address, initialIntegralValue, remark, createUser, updateUser)
+		values(#{status}, #{name}, #{phone}, #{email}, #{address}, #{initialIntegralValue}, #{remark}, #{createUser}, #{updateUser})
 	</insert>
 	
 	<delete id="delete" parameterType="java.lang.Long">
@@ -62,7 +62,7 @@
 	<update id="update" parameterType="cn.net.jalo.performanceindicator.entity.Employee">
 		update t_employee
 		<set>
-		<if test="status != null and status != ''">
+		<if test="status != null">
 			status = #{status},
 		</if>
 		<if test="name != null and name != ''">
@@ -76,6 +76,9 @@
 		</if>
 		<if test="address != null">
 			address = #{address},
+		</if>
+		<if test="initialIntegralValue != null">
+			initialIntegralValue = #{initialIntegralValue},
 		</if>
 		<if test="remark != null">
 			remark = #{remark},

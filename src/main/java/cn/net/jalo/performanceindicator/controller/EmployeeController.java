@@ -3,6 +3,8 @@ package cn.net.jalo.performanceindicator.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +26,8 @@ import cn.net.jalo.performanceindicator.service.EmployeeService;
 @RequestMapping("/employee")
 public class EmployeeController {
 
+	private static final Logger log = LoggerFactory.getLogger(EmployeeController.class);
+	
 	@Autowired
 	private EmployeeService employeeService;
 	
@@ -32,7 +36,8 @@ public class EmployeeController {
 		try {
 			return new Result<Integer>(employeeService.delete(id), "删除成功", true);
 		} catch (Exception e) {
-			return new Result<Integer>(0, "删除失败", false);
+			log.error(e.toString());
+			return new Result<Integer>(0, "删除失败：" + e.getMessage(), false);
 		}
 	}
 	
@@ -41,7 +46,8 @@ public class EmployeeController {
 		try {
 			return new Result<Integer>(employeeService.save(employee), "保存成功", true);
 		} catch (Exception e) {
-			return new Result<Integer>(0, "保存失败", false);
+			log.error(e.toString());
+			return new Result<Integer>(0, "保存失败：" + e.getMessage(), false);
 		}
 	}
 	

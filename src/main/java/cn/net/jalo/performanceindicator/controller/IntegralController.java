@@ -3,6 +3,8 @@ package cn.net.jalo.performanceindicator.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +25,8 @@ import cn.net.jalo.performanceindicator.service.IntegralService;
 @RequestMapping("/integral")
 public class IntegralController {
 
+	private static final Logger log = LoggerFactory.getLogger(IntegralController.class);
+	
 	@Autowired
 	private IntegralService integralService;
 	
@@ -31,7 +35,8 @@ public class IntegralController {
 		try {
 			return new Result<Integer>(integralService.delete(id), "删除成功", true);
 		} catch (Exception e) {
-			return new Result<Integer>(0, "删除失败", false);
+			log.error(e.toString());
+			return new Result<Integer>(0, "删除失败：" + e.getMessage(), false);
 		}
 	}
 	
@@ -40,7 +45,8 @@ public class IntegralController {
 		try {
 			return new Result<Integer>(integralService.save(integral), "保存成功", true);
 		} catch (Exception e) {
-			return new Result<Integer>(0, "保存失败", false);
+			log.error(e.toString());
+			return new Result<Integer>(0, "保存失败：" + e.getMessage(), false);
 		}
 	}
 	

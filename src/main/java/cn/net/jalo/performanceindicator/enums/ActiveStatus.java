@@ -7,7 +7,7 @@ import java.util.Map;
 
 public enum ActiveStatus {
 
-	ENABLED("启用"), DISABLED("禁用");
+	ENABLED("正常"), DISABLED("禁用");
 	
 	private String label;
 

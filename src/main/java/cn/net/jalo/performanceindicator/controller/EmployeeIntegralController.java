@@ -3,6 +3,8 @@ package cn.net.jalo.performanceindicator.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +25,8 @@ import cn.net.jalo.performanceindicator.service.EmployeeIntegralService;
 @RestController
 @RequestMapping("/employee/integral")
 public class EmployeeIntegralController {
+	
+	private static final Logger log = LoggerFactory.getLogger(EmployeeIntegralController.class);
 
 	@Autowired
 	private EmployeeIntegralService employeeIntegralService;
@@ -32,7 +36,8 @@ public class EmployeeIntegralController {
 		try {
 			return new Result<Integer>(employeeIntegralService.delete(id), "删除成功", true);
 		} catch (Exception e) {
-			return new Result<Integer>(0, "删除失败", false);
+			log.error(e.toString());
+			return new Result<Integer>(0, "删除失败：" + e.getMessage(), false);
 		}
 	}
 	
@@ -41,24 +46,22 @@ public class EmployeeIntegralController {
 		try {
 			return new Result<Integer>(employeeIntegralService.save(employeeIntegral), "保存成功", true);
 		} catch (Exception e) {
-			return new Result<Integer>(0, "保存失败", false);
+			log.error(e.toString());
+			return new Result<Integer>(0, "保存失败：" + e.getMessage(), false);
 		}
 	}
 	
 	@GetMapping
-	public Result<Page<EmployeeIntegralModel>> selectModel(@RequestParam(required = false) Integer employeeId,
+	public Result<Page<EmployeeIntegralModel>> selectModel(@RequestParam(required = false) Integer[] employeeIds,
+			@RequestParam(required = false) Integer[] integralIds,
 			@RequestParam(required = false) String integralStartTime,
 			@RequestParam(required = false) String integralEndTime, 
-			@RequestParam(required = false) String name,
-			@RequestParam(required = false) String phone, 
-			@RequestParam(required = false) String email,
-			@RequestParam(required = false) String label,
 			@RequestParam(required = false, defaultValue = "1") Integer pageNum,
 			@RequestParam(required = false, defaultValue = "100") Integer pageSize,
 			@RequestParam(required = false) String orderBy, 
 			HttpServletRequest request, HttpServletResponse response) {
-		Page<EmployeeIntegralModel> employeeIntegrals = employeeIntegralService.selectModel(employeeId, integralStartTime,
-				integralEndTime, name, phone, email, label, pageNum, pageSize, orderBy);
+		Page<EmployeeIntegralModel> employeeIntegrals = employeeIntegralService.selectModel(employeeIds, integralIds, 
+				integralStartTime, integralEndTime, pageNum, pageSize, orderBy);
 		return new Result<>(employeeIntegrals, employeeIntegrals.getPageNum(), employeeIntegrals.getPageSize(),
 				employeeIntegrals.getTotal(), employeeIntegrals.getPages());
 	}
