@@ -53,6 +53,7 @@ public class EmployeeIntegralController {
 	
 	@GetMapping
 	public Result<Page<EmployeeIntegralModel>> selectModel(@RequestParam(required = false) Integer[] employeeIds,
+			@RequestParam(required = false) String employeeStatus,
 			@RequestParam(required = false) Integer[] integralIds,
 			@RequestParam(required = false) String integralStartTime,
 			@RequestParam(required = false) String integralEndTime, 
@@ -60,7 +61,7 @@ public class EmployeeIntegralController {
 			@RequestParam(required = false, defaultValue = "100") Integer pageSize,
 			@RequestParam(required = false) String orderBy, 
 			HttpServletRequest request, HttpServletResponse response) {
-		Page<EmployeeIntegralModel> employeeIntegrals = employeeIntegralService.selectModel(employeeIds, integralIds, 
+		Page<EmployeeIntegralModel> employeeIntegrals = employeeIntegralService.selectModel(employeeIds, employeeStatus, integralIds, 
 				integralStartTime, integralEndTime, pageNum, pageSize, orderBy);
 		return new Result<>(employeeIntegrals, employeeIntegrals.getPageNum(), employeeIntegrals.getPageSize(),
 				employeeIntegrals.getTotal(), employeeIntegrals.getPages());

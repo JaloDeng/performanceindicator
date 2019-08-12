@@ -44,6 +44,9 @@
 				#{employeeId}
 			</foreach>
 		</if>
+		<if test="employeeStatus != null and employeeStatus != ''">
+			AND status = #{employeeStatus}
+		</if>
 		<if test="integralIds != null">
 			AND integralId IN
 			<foreach collection="integralIds" open="(" close=")" separator="," item="integralId">

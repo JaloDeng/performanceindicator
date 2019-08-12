@@ -11,7 +11,8 @@ import cn.net.jalo.performanceindicator.model.EmployeeIntegralModel;
 
 public interface EmployeeIntegralMapper extends BaseMapper<EmployeeIntegral> {
 
-	public Page<EmployeeIntegralModel> selectModel(@Param("employeeIds") Integer[] employeeIds, @Param("integralIds") Integer[] integralIds,
+	public Page<EmployeeIntegralModel> selectModel(@Param("employeeIds") Integer[] employeeIds, 
+			@Param("employeeStatus") String employeeStatus, @Param("integralIds") Integer[] integralIds,
 			@Param("integralStartTime") String integralStartTime, @Param("integralEndTime") String integralEndTime,
 			@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize, @Param("orderBy") String orderBy);
 	
