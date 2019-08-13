@@ -57,8 +57,8 @@ public class EmployeeController {
 			@RequestParam(required = false) String phone,
 			@RequestParam(required = false) String email, 
 			@RequestParam(required = false) String address,
-			@RequestParam(required = false, defaultValue = "1") Integer pageNum,
-			@RequestParam(required = false, defaultValue = "100") Integer pageSize,
+			@RequestParam(required = false) Integer pageNum,
+			@RequestParam(required = false) Integer pageSize,
 			@RequestParam(required = false) String orderBy, 
 			HttpServletRequest request, HttpServletResponse response) {
 		Page<Employee> employees = employeeService.select(status, name, phone, email, address, pageNum, pageSize,
