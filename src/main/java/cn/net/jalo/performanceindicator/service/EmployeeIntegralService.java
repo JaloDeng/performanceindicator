@@ -1,6 +1,7 @@
 package cn.net.jalo.performanceindicator.service;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,7 @@ public class EmployeeIntegralService {
 	
 	public Integer save(EmployeeIntegral employeeIntegral) {
 		employeeIntegral.setUpdateUser("SYSTEM");
+		employeeIntegral.setUpdateTime(new Date());
 		if (employeeIntegral.getId() != null) {
 			return employeeIntegralMapper.update(employeeIntegral);
 		} else {

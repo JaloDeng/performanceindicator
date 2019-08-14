@@ -1,6 +1,7 @@
 package cn.net.jalo.performanceindicator.service;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ public class IntegralService {
 	
 	public Integer save(Integral integral) {
 		integral.setUpdateUser("SYSTEM");
+		integral.setUpdateTime(new Date());
 		if (integral.getId() != null) {
 			return integralMapper.update(integral);
 		} else {
