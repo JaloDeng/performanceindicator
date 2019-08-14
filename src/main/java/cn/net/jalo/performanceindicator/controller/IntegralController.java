@@ -53,8 +53,8 @@ public class IntegralController {
 	@GetMapping
 	public Result<Page<Integral>> select(@RequestParam(required = false) String label, 
 			@RequestParam(required = false) Integer value, 
-			@RequestParam(required = false, defaultValue = "1") Integer pageNum, 
-			@RequestParam(required = false, defaultValue = "100") Integer pageSize, 
+			@RequestParam(required = false) Integer pageNum, 
+			@RequestParam(required = false) Integer pageSize, 
 			@RequestParam(required = false) String orderBy, 
 			HttpServletRequest request, HttpServletResponse response) {
 		Page<Integral> integrals = integralService.select(label, value, pageNum, pageSize, orderBy);

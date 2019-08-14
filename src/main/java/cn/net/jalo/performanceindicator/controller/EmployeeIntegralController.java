@@ -9,11 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.pagehelper.Page;
@@ -52,18 +51,10 @@ public class EmployeeIntegralController {
 		}
 	}
 	
-	@RequestMapping(value = "", method = { RequestMethod.GET, RequestMethod.POST })
-	public Result<Page<EmployeeIntegralModel>> selectModel(@RequestParam("employeeIds[Integer]") Integer[] employeeIds,
-			@RequestParam(required = false) String employeeStatus,
-			@RequestParam(required = false) Integer[] integralIds,
-			@RequestParam(required = false) String integralStartTime,
-			@RequestParam(required = false) String integralEndTime, 
-			@RequestParam(required = false, defaultValue = "1") Integer pageNum,
-			@RequestParam(required = false, defaultValue = "100") Integer pageSize,
-			@RequestParam(required = false) String orderBy, 
+	@PostMapping
+	public Result<Page<EmployeeIntegralModel>> selectModel(@RequestBody EmployeeIntegralModel employeeIntegralModel,
 			HttpServletRequest request, HttpServletResponse response) {
-		Page<EmployeeIntegralModel> employeeIntegrals = employeeIntegralService.selectModel(employeeIds, employeeStatus, integralIds, 
-				integralStartTime, integralEndTime, pageNum, pageSize, orderBy);
+		Page<EmployeeIntegralModel> employeeIntegrals = employeeIntegralService.selectModel(employeeIntegralModel);
 		return new Result<>(employeeIntegrals, employeeIntegrals.getPageNum(), employeeIntegrals.getPageSize(),
 				employeeIntegrals.getTotal(), employeeIntegrals.getPages());
 	}

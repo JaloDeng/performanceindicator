@@ -33,9 +33,8 @@ public class EmployeeIntegralService {
 		}
 	}
 	
-	public Page<EmployeeIntegralModel> selectModel(Integer[] employeeIds, String employeeStatus, Integer[] integralIds, String integralStartTime, 
-			String integralEndTime, Integer pageNum, Integer pageSize, String orderBy) {
-		return employeeIntegralMapper.selectModel(employeeIds, employeeStatus, integralIds, integralStartTime, integralEndTime, pageNum, pageSize, orderBy);
+	public Page<EmployeeIntegralModel> selectModel(EmployeeIntegralModel employeeIntegralModel) {
+		return employeeIntegralMapper.selectModel(employeeIntegralModel);
 	}
 	
 	public EmployeeIntegralModel selectModelById(Serializable id) {

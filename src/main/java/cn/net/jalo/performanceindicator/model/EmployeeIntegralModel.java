@@ -1,6 +1,7 @@
 package cn.net.jalo.performanceindicator.model;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -21,9 +22,9 @@ public class EmployeeIntegralModel extends BaseModel {
 	private String name;
 	private String label;
 	
-	private Integer[] employeeIds;
+	private List<Integer> employeeIds;
 	private String employeeStatus;
-	private Integer[] integralIds;
+	private List<Integer> integralIds;
 	private String integralStartTime;
 	private String integralEndTime;
 }

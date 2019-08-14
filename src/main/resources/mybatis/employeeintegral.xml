@@ -38,7 +38,7 @@
 	
 	<sql id="Where_Clause">
 		<where>
-		<if test="employeeIds != null">
+		<if test="employeeIds != null and employeeIds.size() > 0">
 			AND employeeId IN
 			<foreach collection="employeeIds" open="(" close=")" separator="," item="employeeId">
 				#{employeeId}
@@ -47,7 +47,7 @@
 		<if test="employeeStatus != null and employeeStatus != ''">
 			AND status = #{employeeStatus}
 		</if>
-		<if test="integralIds != null">
+		<if test="integralIds != null and integralIds.size() > 0">
 			AND integralId IN
 			<foreach collection="integralIds" open="(" close=")" separator="," item="integralId">
 				#{integralId}
