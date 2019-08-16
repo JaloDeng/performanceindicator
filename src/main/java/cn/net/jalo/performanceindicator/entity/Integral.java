@@ -10,6 +10,7 @@ public class Integral {
 	private String label;
 	private Integer value;
 	private String remark;
+	private String columnName;
 	private String createUser;
 	private Date createTime;
 	private String updateUser;

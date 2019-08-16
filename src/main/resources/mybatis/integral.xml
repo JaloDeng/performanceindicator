@@ -8,6 +8,7 @@
 		<result column="label" property="label"/>
 		<result column="value" property="value"/>
 		<result column="remark" property="remark"/>
+		<result column="columnName" property="columnName"/>
 		<result column="createUser" property="createUser"/>
 		<result column="createTime" property="createTime"/>
 		<result column="updateUser" property="updateUser"/>
@@ -39,7 +40,10 @@
 	</delete>
 	
 	<select id="select" resultMap="BaseResultMap">
-		SELECT <include refid="Base_Column"/> FROM t_integral <include refid="Where_Clause"/>
+		SELECT 
+			<include refid="Base_Column"/>
+			, CONCAT('', id) AS columnName
+		FROM t_integral <include refid="Where_Clause"/>
 	</select>
 	
 	<select id="selectById" resultMap="BaseResultMap">
