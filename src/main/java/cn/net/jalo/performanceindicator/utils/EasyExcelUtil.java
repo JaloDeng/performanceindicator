@@ -25,7 +25,7 @@ public class EasyExcelUtil {
 		ExcelWriter writer = new ExcelWriter(out, ExcelTypeEnum.XLSX, true);
 		try {
 			response.setCharacterEncoding("UTF-8");
-			response.setContentType("application/vnd.ms-excel");
+			response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 			response.setHeader("content-Disposition", "attachment;filename=" + URLEncoder.encode(fileName + ".xlsx", "utf-8"));
 			writer.write(data, sheet);
 		} catch (UnsupportedEncodingException e) {
