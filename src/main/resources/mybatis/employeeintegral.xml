@@ -68,6 +68,19 @@
 		DELETE FROM t_employee_integral WHERE id = #{id}
 	</delete>
 	
+	<select id="selectExportToExcel" resultType="cn.net.jalo.performanceindicator.model.excel.EmployeeIntegralExcelModel">
+		SELECT 		
+			  ei.integralTime
+			, ei.integralValue
+			, ei.remark
+			, e.name
+			, i.label
+		FROM t_employee_integral ei
+		INNER JOIN t_employee e ON e.id = ei.employeeId
+		INNER JOIN t_integral i ON i.id = ei.integralId
+		<include refid="Where_Clause"/>
+	</select>
+	
 	<select id="selectModel" resultMap="ModelResultMap">
 		SELECT 		
 			  ei.id

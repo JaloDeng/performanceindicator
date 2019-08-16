@@ -15,12 +15,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.excel.metadata.Sheet;
 import com.github.pagehelper.Page;
 
 import cn.net.jalo.performanceindicator.entity.EmployeeIntegral;
 import cn.net.jalo.performanceindicator.model.EmployeeIntegralModel;
+import cn.net.jalo.performanceindicator.model.excel.EmployeeIntegralExcelModel;
 import cn.net.jalo.performanceindicator.result.Result;
 import cn.net.jalo.performanceindicator.service.EmployeeIntegralService;
+import cn.net.jalo.performanceindicator.utils.EasyExcelUtil;
 
 @RestController
 @RequestMapping("/employee/integral")
@@ -49,6 +52,13 @@ public class EmployeeIntegralController {
 			log.error(e.toString());
 			return new Result<Integer>(0, "保存失败：" + e.getMessage(), false);
 		}
+	}
+	
+	@PostMapping("/export/excel")
+	public void exportToExcel(@RequestBody EmployeeIntegralModel employeeIntegralModel,
+			HttpServletRequest request, HttpServletResponse response) {
+		EasyExcelUtil.exportToXLSX(employeeIntegralService.selectExportToExcel(employeeIntegralModel), "积分统计", 
+				new Sheet(1, 0, EmployeeIntegralExcelModel.class), response);
 	}
 	
 	@PostMapping

@@ -26,9 +26,7 @@ public class EasyExcelUtil {
 		try {
 			response.setCharacterEncoding("UTF-8");
 			response.setContentType("application/vnd.ms-excel");
-			
-			response.setHeader("content-Disposition",
-					"attachment;filename=" + URLEncoder.encode(fileName + ".xlsx", "utf-8").replaceAll("\\+", "%20"));
+			response.setHeader("content-Disposition", "attachment;filename=" + URLEncoder.encode(fileName + ".xlsx", "utf-8"));
 			writer.write(data, sheet);
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();

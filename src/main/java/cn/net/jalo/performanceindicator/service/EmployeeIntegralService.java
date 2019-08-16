@@ -12,6 +12,7 @@ import com.github.pagehelper.Page;
 import cn.net.jalo.performanceindicator.entity.EmployeeIntegral;
 import cn.net.jalo.performanceindicator.mapper.EmployeeIntegralMapper;
 import cn.net.jalo.performanceindicator.model.EmployeeIntegralModel;
+import cn.net.jalo.performanceindicator.model.excel.EmployeeIntegralExcelModel;
 
 @Service
 @Transactional
@@ -33,6 +34,10 @@ public class EmployeeIntegralService {
 			employeeIntegral.setCreateUser("SYSTEM");
 			return employeeIntegralMapper.insert(employeeIntegral);
 		}
+	}
+	
+	public Page<EmployeeIntegralExcelModel> selectExportToExcel(EmployeeIntegralModel employeeIntegralModel) {
+		return employeeIntegralMapper.selectExportToExcel(employeeIntegralModel);
 	}
 	
 	public Page<EmployeeIntegralModel> selectModel(EmployeeIntegralModel employeeIntegralModel) {
