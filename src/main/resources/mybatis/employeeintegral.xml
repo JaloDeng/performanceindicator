@@ -104,7 +104,11 @@
 	<select id="selectStatistics">
 		SELECT 
 			e.`name`
-			,IFNULL((SELECT ei.integralValue FROM t_employee_integral ei WHERE ei.employeeId = e.id AND ei.integralId = 1), 0) AS '1'
+		<if test="integralIds != null and integralIds.size() > 0">
+			<foreach collection="integralIds" item="integralId">				
+			,IFNULL((SELECT ei.integralValue FROM t_employee_integral ei WHERE ei.employeeId = e.id AND ei.integralId = ${integralIds}), 0) AS '${integralIds}'
+			</foreach>
+		</if>
 		FROM t_employee e
 		<where>
 		<if test="employeeIds != null and employeeIds.size() > 0">
