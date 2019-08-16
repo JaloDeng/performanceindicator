@@ -57,7 +57,7 @@ public class EmployeeIntegralController {
 	@PostMapping("/export/excel")
 	public void exportToExcel(@RequestBody EmployeeIntegralModel employeeIntegralModel,
 			HttpServletRequest request, HttpServletResponse response) {
-		EasyExcelUtil.exportToXLSX(employeeIntegralService.selectExportToExcel(employeeIntegralModel), "积分统计", 
+		EasyExcelUtil.exportToXLSX(employeeIntegralService.selectExportToExcel(employeeIntegralModel), "pi", 
 				new Sheet(1, 0, EmployeeIntegralExcelModel.class), response);
 	}
 	
