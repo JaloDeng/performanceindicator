@@ -1,5 +1,7 @@
 package cn.net.jalo.performanceindicator.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -72,5 +74,11 @@ public class EmployeeIntegralController {
 	@GetMapping("/{id}")
 	public Result<EmployeeIntegralModel> selectModelById(@PathVariable Long id, HttpServletRequest request, HttpServletResponse response) {
 		return new Result<>(employeeIntegralService.selectModelById(id));
+	}
+	
+	@PostMapping("/statistics")
+	public Result<Page<Map<String, Object>>> selectStatistics(@RequestBody EmployeeIntegralModel employeeIntegralModel, 
+			HttpServletRequest request, HttpServletResponse response) {
+		return new Result<>(employeeIntegralService.selectStatistics(employeeIntegralModel));
 	}
 }

@@ -11,6 +11,7 @@ import com.github.pagehelper.Page;
 
 import cn.net.jalo.performanceindicator.entity.Integral;
 import cn.net.jalo.performanceindicator.mapper.IntegralMapper;
+import cn.net.jalo.performanceindicator.model.IntegralModel;
 
 @Service
 @Transactional
@@ -34,8 +35,8 @@ public class IntegralService {
 		}
 	}
 	
-	public Page<Integral> select(String label, Integer value, Integer pageNum, Integer pageSize, String orderBy) {
-		return integralMapper.select(label, value, pageNum, pageSize, orderBy);
+	public Page<Integral> select(IntegralModel integralModel) {
+		return integralMapper.select(integralModel);
 	}
 	
 	public Integral selectById(Serializable id) {

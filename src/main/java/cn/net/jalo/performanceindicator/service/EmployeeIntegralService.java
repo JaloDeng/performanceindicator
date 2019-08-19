@@ -2,6 +2,7 @@ package cn.net.jalo.performanceindicator.service;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,5 +47,9 @@ public class EmployeeIntegralService {
 	
 	public EmployeeIntegralModel selectModelById(Serializable id) {
 		return employeeIntegralMapper.selectModelById(id);
+	}
+	
+	public Page<Map<String, Object>> selectStatistics(EmployeeIntegralModel employeeIntegralModel) {
+		return employeeIntegralMapper.selectStatistics(employeeIntegralModel);
 	}
 }

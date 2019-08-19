@@ -1,6 +1,7 @@
 package cn.net.jalo.performanceindicator.mapper;
 
 import java.io.Serializable;
+import java.util.Map;
 
 import com.github.pagehelper.Page;
 
@@ -15,4 +16,6 @@ public interface EmployeeIntegralMapper extends BaseMapper<EmployeeIntegral> {
 	public Page<EmployeeIntegralModel> selectModel(EmployeeIntegralModel employeeIntegralModel);
 	
 	public EmployeeIntegralModel selectModelById(Serializable id);
+	
+	public Page<Map<String, Object>> selectStatistics(EmployeeIntegralModel employeeIntegralModel);
 }

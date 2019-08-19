@@ -101,12 +101,13 @@
 		<include refid="Where_Clause"/>
 	</select>
 	
-	<select id="selectStatistics">
+	<select id="selectStatistics" resultType="java.util.Map">
 		SELECT 
-			e.`name`
+			  e.id
+			, e.`name`
 		<if test="integralIds != null and integralIds.size() > 0">
 			<foreach collection="integralIds" item="integralId">				
-			,IFNULL((SELECT ei.integralValue FROM t_employee_integral ei WHERE ei.employeeId = e.id AND ei.integralId = ${integralIds}), 0) AS '${integralIds}'
+			, IFNULL((SELECT SUM(ei.integralValue) FROM t_employee_integral ei WHERE ei.employeeId = e.id AND ei.integralId = ${integralId}), 0) AS `${integralId}`
 			</foreach>
 		</if>
 		FROM t_employee e

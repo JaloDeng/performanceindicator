@@ -27,6 +27,12 @@
 		<if test="value != null">
 			AND value = #{value}
 		</if>
+		<if test="integralIds != null and integralIds.size() > 0">
+			AND id IN
+			<foreach collection="integralIds" open="(" close=")" separator="," item="id">
+				#{id}
+			</foreach>
+		</if>
 		</where>
 	</sql>
 	

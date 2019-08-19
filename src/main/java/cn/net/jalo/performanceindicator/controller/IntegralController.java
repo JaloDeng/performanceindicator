@@ -9,15 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.pagehelper.Page;
 
 import cn.net.jalo.performanceindicator.entity.Integral;
+import cn.net.jalo.performanceindicator.model.IntegralModel;
 import cn.net.jalo.performanceindicator.result.Result;
 import cn.net.jalo.performanceindicator.service.IntegralService;
 
@@ -50,14 +51,9 @@ public class IntegralController {
 		}
 	}
 	
-	@GetMapping
-	public Result<Page<Integral>> select(@RequestParam(required = false) String label, 
-			@RequestParam(required = false) Integer value, 
-			@RequestParam(required = false) Integer pageNum, 
-			@RequestParam(required = false) Integer pageSize, 
-			@RequestParam(required = false) String orderBy, 
-			HttpServletRequest request, HttpServletResponse response) {
-		Page<Integral> integrals = integralService.select(label, value, pageNum, pageSize, orderBy);
+	@PostMapping
+	public Result<Page<Integral>> select(@RequestBody IntegralModel integralModel, HttpServletRequest request, HttpServletResponse response) {
+		Page<Integral> integrals = integralService.select(integralModel);
 		return new Result<>(integrals, integrals.getPageNum(), integrals.getPageSize(), integrals.getTotal(), integrals.getPages());
 	}
 	
