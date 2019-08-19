@@ -109,11 +109,86 @@
 		SELECT 
 			  e.id
 			, e.`name`
+			, 
+		<if test="integralStartTime != null and integralStartTime != ''">
+			IFNULL(
+					(SELECT 
+						SUM(IFNULL(ei.integralValue, 0) + IFNULL(ei.integralReduceValue, 0))
+					FROM t_employee_integral ei 
+					WHERE ei.employeeId = e.id 
+					<choose>
+					<when test="integralIds != null and integralIds.size() > 0">
+						AND ei.integralId IN
+						<foreach collection="integralIds" open="(" close=")" separator="," item="integralId">
+							#{integralId}
+						</foreach>
+					</when>
+					<otherwise>
+						AND ei.integralId = 0
+					</otherwise>
+					</choose>
+						AND ei.integralTime &lt; #{integralStartTime}
+					)
+				, 0) + 
+		</if>
+				IFNULL(e.initialIntegralValue, 0) AS lastIntegral
 		<if test="integralIds != null and integralIds.size() > 0">
-			<foreach collection="integralIds" item="integralId">				
-			, IFNULL((SELECT SUM(ei.integralValue) FROM t_employee_integral ei WHERE ei.employeeId = e.id AND ei.integralId = ${integralId}), 0) AS `${integralId}`
+			<foreach collection="integralIds" item="integralId">
+			, IFNULL(
+					(SELECT 
+						SUM(ei.integralValue) 
+					FROM t_employee_integral ei 
+					WHERE ei.employeeId = e.id 
+						AND ei.integralId = ${integralId}
+					<if test="integralStartTime != null and integralStartTime != '' and integralEndTime != null and integralEndTime != ''">
+						AND ei.integralTime BETWEEN #{integralStartTime} AND #{integralEndTime}
+					</if>
+					)
+				, 0) AS `${integralId}`		
 			</foreach>
 		</if>
+			, IFNULL(
+					(SELECT 
+						SUM(ei.integralReduceValue) 
+					FROM t_employee_integral ei 
+					WHERE ei.employeeId = e.id 
+					<choose>
+					<when test="integralIds != null and integralIds.size() > 0">
+						AND ei.integralId IN
+						<foreach collection="integralIds" open="(" close=")" separator="," item="integralId">
+							#{integralId}
+						</foreach>
+					</when>
+					<otherwise>
+						AND ei.integralId = 0
+					</otherwise>
+					</choose>
+					<if test="integralEndTime != null and integralEndTime != ''">
+						AND ei.integralTime BETWEEN #{integralStartTime} AND #{integralEndTime}
+					</if>
+					)
+				, 0) AS reduceIntegral
+			, IFNULL(
+					(SELECT 
+						SUM(IFNULL(ei.integralValue, 0) + IFNULL(ei.integralReduceValue, 0))
+					FROM t_employee_integral ei 
+					WHERE ei.employeeId = e.id 
+					<choose>
+					<when test="integralIds != null and integralIds.size() > 0">
+						AND ei.integralId IN
+						<foreach collection="integralIds" open="(" close=")" separator="," item="integralId">
+							#{integralId}
+						</foreach>
+					</when>
+					<otherwise>
+						AND ei.integralId = 0
+					</otherwise>
+					</choose>
+					<if test="integralStartTime != null and integralStartTime != '' and integralEndTime != null and integralEndTime != ''">
+						AND ei.integralTime &lt; #{integralEndTime}
+					</if>
+					)
+				, 0) + IFNULL(e.initialIntegralValue, 0) AS integral
 		FROM t_employee e
 		<where>
 		<if test="employeeIds != null and employeeIds.size() > 0">
