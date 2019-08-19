@@ -7,6 +7,7 @@
 		<result column="id" property="id"/>
 		<result column="label" property="label"/>
 		<result column="value" property="value"/>
+		<result column="reduceValue" property="reduceValue"/>
 		<result column="remark" property="remark"/>
 		<result column="columnName" property="columnName"/>
 		<result column="createUser" property="createUser"/>
@@ -16,7 +17,7 @@
 	</resultMap>
 	
 	<sql id="Base_Column" >
-		id, label, value, remark, createUser, createTime, updateUser, updateTime
+		id, label, value, reduceValue, remark, createUser, createTime, updateUser, updateTime
 	</sql>
 	
 	<sql id="Where_Clause">
@@ -37,8 +38,8 @@
 	</sql>
 	
 	<insert id="insert" parameterType="cn.net.jalo.performanceindicator.entity.Integral">
-		INSERT INTO t_integral(label, value, remark, createUser, updateUser)
-		values(#{label}, #{value}, #{remark}, #{createUser}, #{updateUser})
+		INSERT INTO t_integral(label, value, reduceValue, remark, createUser, updateUser)
+		values(#{label}, #{value}, #{reduceValue}, #{remark}, #{createUser}, #{updateUser})
 	</insert>
 	
 	<delete id="delete" parameterType="java.lang.Long">
@@ -64,6 +65,9 @@
 		</if>
 		<if test="value != null">
 			value = #{value},
+		</if>
+		<if test="reduceValue != null">
+			reduceValue = #{reduceValue},
 		</if>
 		<if test="remark != null">
 			remark = #{remark},

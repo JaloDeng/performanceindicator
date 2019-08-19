@@ -9,6 +9,7 @@
 		<result column="integralId" property="integralId"/>
 		<result column="integralTime" property="integralTime"/>
 		<result column="integralValue" property="integralValue"/>
+		<result column="integralReduceValue" property="integralReduceValue"/>
 		<result column="remark" property="remark"/>
 		<result column="createUser" property="createUser"/>
 		<result column="createTime" property="createTime"/>
@@ -25,6 +26,7 @@
 		<result column="integralId" property="integralId"/>
 		<result column="integralTime" property="integralTime"/>
 		<result column="integralValue" property="integralValue"/>
+		<result column="integralReduceValue" property="integralReduceValue"/>
 		<result column="remark" property="remark"/>
 		<result column="createUser" property="createUser"/>
 		<result column="createTime" property="createTime"/>
@@ -33,7 +35,7 @@
 	</resultMap>
 	
 	<sql id="Base_Column" >
-		id, employeeId, integralId, integralTime, integralValue, remark, createUser, createTime, updateUser, updateTime
+		id, employeeId, integralId, integralTime, integralValue, integralReduceValue, remark, createUser, createTime, updateUser, updateTime
 	</sql>
 	
 	<sql id="Where_Clause">
@@ -60,8 +62,8 @@
 	</sql>
 	
 	<insert id="insert" parameterType="cn.net.jalo.performanceindicator.entity.EmployeeIntegral">
-		INSERT INTO t_employee_integral(employeeId, integralId, integralTime, integralValue, remark, createUser, updateUser)
-		values(#{employeeId}, #{integralId}, #{integralTime}, #{integralValue}, #{remark}, #{createUser}, #{updateUser})
+		INSERT INTO t_employee_integral(employeeId, integralId, integralTime, integralValue, integralReduceValue, remark, createUser, updateUser)
+		values(#{employeeId}, #{integralId}, #{integralTime}, #{integralValue}, #{integralReduceValue}, #{remark}, #{createUser}, #{updateUser})
 	</insert>
 	
 	<delete id="delete" parameterType="java.lang.Long">
@@ -72,6 +74,7 @@
 		SELECT 		
 			  ei.integralTime
 			, ei.integralValue
+			, ei.integralReduceValue
 			, ei.remark
 			, e.name
 			, i.label
@@ -88,6 +91,7 @@
 			, ei.integralId
 			, ei.integralTime
 			, ei.integralValue
+			, ei.integralReduceValue
 			, ei.remark
 			, ei.createUser
 			, ei.createTime
@@ -128,6 +132,7 @@
 			, ei.integralId
 			, ei.integralTime
 			, ei.integralValue
+			, ei.integralReduceValue
 			, ei.remark
 			, ei.createUser
 			, ei.createTime
@@ -155,6 +160,9 @@
 		</if>
 		<if test="integralValue != null">
 			integralValue = #{integralValue},
+		</if>
+		<if test="integralReduceValue != null">
+			integralReduceValue = #{integralReduceValue},
 		</if>
 		<if test="remark != null">
 			remark = #{remark},

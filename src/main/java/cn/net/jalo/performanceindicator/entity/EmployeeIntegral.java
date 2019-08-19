@@ -11,6 +11,7 @@ public class EmployeeIntegral {
 	private Integer integralId;
 	private Date integralTime;
 	private Integer integralValue;
+	private Integer integralReduceValue;
 	private String remark;
 	private String createUser;
 	private Date createTime;

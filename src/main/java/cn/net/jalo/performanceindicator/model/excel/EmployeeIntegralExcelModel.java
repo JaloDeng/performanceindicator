@@ -23,6 +23,9 @@ public class EmployeeIntegralExcelModel extends BaseRowModel {
 	@ExcelProperty(value = "积分", index = 3)
 	private Integer integralValue;
 	
-	@ExcelProperty(value = "备注", index = 4)
+	@ExcelProperty(value = "减分", index = 4)
+	private Integer integralReduceValue;
+	
+	@ExcelProperty(value = "备注", index = 5)
 	private String remark;
 }

@@ -1,7 +1,7 @@
 /*
 MySQL Backup
 Database: performance_indicator
-Backup Time: 2019-07-30 12:25:12
+Backup Time: 2019-08-19 11:03:01
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -28,7 +28,8 @@ CREATE TABLE `t_employee_integral` (
   `employeeId` int(11) DEFAULT NULL COMMENT '员工ID，t_employee.id',
   `integralId` int(11) DEFAULT NULL COMMENT '积分ID，t_integral.id',
   `integralTime` datetime DEFAULT NULL COMMENT '获得积分的时间',
-  `integralValue` int(11) DEFAULT NULL COMMENT '积分值，冗余，以防积分表变化',
+  `integralValue` int(11) DEFAULT '0' COMMENT '积分值，冗余，以防积分表变化',
+  `integralReduceValue` int(11) DEFAULT '0' COMMENT '减分值，冗余，以防积分表变化',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
   `createUser` varchar(100) DEFAULT NULL COMMENT '创建用户',
   `createTime` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -42,7 +43,8 @@ CREATE TABLE `t_employee_integral` (
 CREATE TABLE `t_integral` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `label` varchar(100) DEFAULT NULL COMMENT '标签',
-  `value` int(11) DEFAULT NULL COMMENT '积分值',
+  `value` int(11) DEFAULT '0' COMMENT '积分值',
+  `reduceValue` int(11) DEFAULT '0' COMMENT '减分值',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
   `createUser` varchar(100) DEFAULT NULL COMMENT '创建用户',
   `createTime` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -64,6 +66,6 @@ COMMIT;
 BEGIN;
 LOCK TABLES `performance_indicator`.`t_integral` WRITE;
 DELETE FROM `performance_indicator`.`t_integral`;
-INSERT INTO `performance_indicator`.`t_integral` (`id`,`label`,`value`,`remark`,`createUser`,`createTime`,`updateUser`,`updateTime`) VALUES (1, '开户', 4, NULL, 'SYSTEM', '2019-07-30 12:23:38', 'SYSTEM', '2019-07-30 12:24:51'),(2, '发起方', 3, NULL, 'SYSTEM', '2019-07-30 12:23:50', 'SYSTEM', '2019-07-30 12:24:51'),(3, '活动前', 2, NULL, 'SYSTEM', '2019-07-30 12:23:59', 'SYSTEM', '2019-07-30 12:24:52'),(4, '活动中', 1, NULL, 'SYSTEM', '2019-07-30 12:24:07', 'SYSTEM', '2019-07-30 12:24:52'),(5, '活动总结', 1, NULL, 'SYSTEM', '2019-07-30 12:24:19', 'SYSTEM', '2019-07-30 12:24:53'),(6, '活动后跟踪', 1, NULL, 'SYSTEM', '2019-07-30 12:24:30', 'SYSTEM', '2019-07-30 12:24:53'),(7, '讲师', 3, NULL, 'SYSTEM', '2019-07-30 12:24:42', 'SYSTEM', '2019-07-30 12:24:54');
+INSERT INTO `performance_indicator`.`t_integral` (`id`,`label`,`value`,`reduceValue`,`remark`,`createUser`,`createTime`,`updateUser`,`updateTime`) VALUES (1, '开户', 4, -10, '凡成功开户者，需扣减10分', 'SYSTEM', '2019-07-30 12:23:38', 'SYSTEM', '2019-08-19 11:01:46'),(2, '发起方', 3, 0, NULL, 'SYSTEM', '2019-07-30 12:23:50', 'SYSTEM', '2019-07-30 12:24:51'),(3, '活动前', 2, 0, NULL, 'SYSTEM', '2019-07-30 12:23:59', 'SYSTEM', '2019-07-30 12:24:52'),(4, '活动中', 1, 0, NULL, 'SYSTEM', '2019-07-30 12:24:07', 'SYSTEM', '2019-07-30 12:24:52'),(5, '活动总结', 1, 0, NULL, 'SYSTEM', '2019-07-30 12:24:19', 'SYSTEM', '2019-07-30 12:24:53'),(6, '活动后跟踪', 1, 0, NULL, 'SYSTEM', '2019-07-30 12:24:30', 'SYSTEM', '2019-07-30 12:24:53'),(7, '讲师', 3, 0, NULL, 'SYSTEM', '2019-07-30 12:24:42', 'SYSTEM', '2019-07-30 12:24:54');
 UNLOCK TABLES;
 COMMIT;
